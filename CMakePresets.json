@@ -1,39 +1,36 @@
 {
-    "version": 6,
-    "cmakeMinimumRequired": {
-      "major": 3,
-      "minor": 26,
-      "patch": 0
-    },
-    "configurePresets": [
-      {
-        "name": "dev",
-        "displayName": "Dev (Debug, Clang+Ninja)",
-        "generator": "Ninja",
-        "binaryDir": "${sourceDir}/build/dev",
-        "cacheVariables": {
-          "CMAKE_BUILD_TYPE": "Debug",
-          "CMAKE_CXX_COMPILER": "/opt/homebrew/opt/llvm/bin/clang++",
-          "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
-        }
-      },
-      {
-        "name": "release",
-        "displayName": "Release (Clang+Ninja)",
-        "generator": "Ninja",
-        "binaryDir": "${sourceDir}/build/release",
-        "cacheVariables": {
-          "CMAKE_BUILD_TYPE": "Release",
-          "CMAKE_CXX_COMPILER": "/opt/homebrew/opt/llvm/bin/clang++",
-          "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
-        }
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "dev",
+      "displayName": "Dev (Debug, Clang + ASan/UBSan + mold)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/dev",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+
+        "CMAKE_CXX_FLAGS_DEBUG": "-fsanitize=address,undefined -fno-omit-frame-pointer",
+        "CMAKE_EXE_LINKER_FLAGS_DEBUG": "-fsanitize=address,undefined -fuse-ld=mold"
       }
-    ],
-    "buildPresets": [
-      { "name": "dev", "configurePreset": "dev" },
-      { "name": "release", "configurePreset": "release" }
-    ],
-    "testPresets": [
-      { "name": "dev", "configurePreset": "dev" }
-    ]
-  }
+    },
+    {
+      "name": "release",
+      "displayName": "Release (Clang + mold)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+
+        "CMAKE_EXE_LINKER_FLAGS_RELEASE": "-fuse-ld=mold"
+      }
+    }
+  ],
+  "buildPresets": [
+    { "name": "dev", "configurePreset": "dev" },
+    { "name": "release", "configurePreset": "release" }
+  ]
+}
