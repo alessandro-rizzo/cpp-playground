@@ -152,6 +152,8 @@ constexpr double pi = 3.14159;
 constexpr double square(double x) { return x * x; }
 constexpr double area = square(5.0);  // Computed at compile time
 ```
+*The golden rule*: `const` applies to the thing immediately to its left.
+If there is nothing to the left, it applies to the thing on its right.
 
 ### 8. Pointers
 
