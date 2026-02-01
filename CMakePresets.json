@@ -3,28 +3,51 @@
   "configurePresets": [
     {
       "name": "dev",
-      "displayName": "Dev (Debug, Clang + ASan/UBSan + mold)",
+      "displayName": "Dev (Debug, Clang + ASan/UBSan)",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/dev",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_CXX_COMPILER": "clang++",
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-
         "CMAKE_CXX_FLAGS_DEBUG": "-fsanitize=address,undefined -fno-omit-frame-pointer",
+        "CMAKE_EXE_LINKER_FLAGS_DEBUG": "-fsanitize=address,undefined"
+      }
+    },
+    {
+      "name": "dev-linux",
+      "displayName": "Dev Linux (Debug, Clang + ASan/UBSan + mold)",
+      "inherits": "dev",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "cacheVariables": {
         "CMAKE_EXE_LINKER_FLAGS_DEBUG": "-fsanitize=address,undefined -fuse-ld=mold"
       }
     },
     {
       "name": "release",
-      "displayName": "Release (Clang + mold)",
+      "displayName": "Release (Clang, Optimized)",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/release",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
         "CMAKE_CXX_COMPILER": "clang++",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "release-linux",
+      "displayName": "Release Linux (Clang + mold)",
+      "inherits": "release",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "cacheVariables": {
         "CMAKE_EXE_LINKER_FLAGS_RELEASE": "-fuse-ld=mold"
       }
     }
