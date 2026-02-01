@@ -45,17 +45,33 @@ public:
     return Complex(r + o.r, i + o.i);
   };
   void print() const {
-    cout << real;
-    if (imag >= 0)
-      cout << " + " << imag << "i";
+    std::cout << r;
+    if (i >= 0)
+      std::cout << " + " << i << "i";
     else
-      cout << " - " << -imag << "i";
-    cout << endl;
+      std::cout << " - " << -i << "i";
+    std::cout << std::endl;
   }
 
 private:
   float r;
   float i;
+};
+
+enum class Suit { Hearts, Diamons, Clubs, Spades };
+enum class Rank {
+  Ace,
+  Two,
+  Three,
+  Four,
+  Five,
+  Six,
+  Seven,
+  Eight,
+  Nine,
+  Jack,
+  Queen,
+  King
 };
 
 int main() {
@@ -72,5 +88,8 @@ int main() {
   std::cout << rr.perimeter() << '\n';
   std::cout << rr.square();
 
-    return 0;
+  Complex c(2, 3);
+  c.print();
+
+  return 0;
 }
