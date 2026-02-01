@@ -7,5 +7,8 @@
     "editor.defaultFormatter": "ms-vscode.cpptools",
     "editor.formatOnSave": true
   },
-  "C_Cpp.clang_format_fallbackStyle": "LLVM"
+  // Use the .clang-format file in the project root
+  "C_Cpp.clang_format_style": "file",
+  // Path to clang-format (uses built-in from C++ extension)
+  "C_Cpp.formatting": "clangFormat"
 }
